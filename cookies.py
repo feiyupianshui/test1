@@ -24,7 +24,7 @@ def get_cookie(account, password):#这对参数在下面init_cookie()中对应�
     logger.warning('获取Cookie成功！帐号为：%s' %account)
     return json.dumps(cookies)#如果不序列化，存入Redis后会变成Plain Text格式，后面取出来就没法用了
 
-def init_cookie(red, spidername):#这两个参数在写中间件时传入
+def init_cookie(red, spidername):#spidername在中间件中是用crawler.spider.name传入的
     redkeys = reds.keys()#登录帐号
     for user in reskeys:
         password = reds.get(user)#登录密码

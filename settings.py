@@ -33,7 +33,8 @@ ROBOTSTXT_OBEY = False
 #CONCURRENT_REQUESTS_PER_IP = 16
 
 # Disable cookies (enabled by default)
-#COOKIES_ENABLED = False
+COOKIES_ENABLED = True
+COOKIES_DEBUG = True
 
 # Disable Telnet Console (enabled by default)
 #TELNETCONSOLE_ENABLED = False
@@ -54,9 +55,11 @@ DEFAULT_REQUEST_HEADERS = {
 
 # Enable or disable downloader middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
-# DOWNLOADER_MIDDLEWARES = {
-#    'scrapy.contrib.downloadermiddleware.cookies.CookiesMiddleware': 700,
-# }
+DOWNLOADER_MIDDLEWARES = {
+   # 'scrapy.contrib.downloadermiddleware.cookies.CookiesMiddleware': 700,
+   'test1.middlewares.CookieMiddleware': 700,
+   'test1.middlewares.UserAgentmiddleware': 400,
+}
 
 # Enable or disable extensions
 # See http://scrapy.readthedocs.org/en/latest/topics/extensions.html
@@ -91,6 +94,14 @@ HTTPCACHE_DIR = 'httpcache'
 HTTPCACHE_IGNORE_HTTP_CODES = []
 HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
+#redis设置
 SCHEDULER = "scrapy_redis.scheduler.Scheduler"
 DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
-REDIS_URL = 'redis://root:118667@127.0.0.1IP:6666'
+REDIS_URL = 'redis://root:118667@127.0.0.1:6666'
+
+#其他设置
+REDIRECT_ENABLED = False
+
+HTTPERROR_ALLOWED_CODES = [302, 301]
+
+DEPTH_LIMIT = 3 #爬全站确实深度限制很重要

@@ -23,18 +23,19 @@ class UserAgentmiddleware(UserAgentMiddleware):
 class CookieMiddleware(RetryMiddleware):#和内置的CookiesMiddleware不一样，而且是继承自重试中间件
 
     def __init__(self, settings, crawler):#这个方法在下面用cls()直接调用了
-        RetryMiddleware.__init__(self, settings)
+        RetryMiddleware.__init__(self, settings)#重载，因为继承父类之后，子类是不能用def init()方法的，不过重载父类之后就能用了
         self.rconn = redis.from_url(settings['REDIS_URL'], db=1, decode_responses=True)
-        init_cookie(self.rconn, crawler.spider.name) #把cookie放入redis db1,crawler.spider.name是spidername的获取方法。
+        init_cookie(self.rconn, crawler.spider.name) #把cookie放入redis db1,crawler.spider.name是spidername的获取方法
 
     @classmethod
-    def from_crawler(cls, crawler):
-        return cls(crawler.settings, crawler)#重载，因为继承父类之后，子类是不能用def init()方法的，不过重载父类之后就能用了
+    def from_crawler(cls, crawler):#这是scrapy提供访问settings的方法
+        return cls(crawler.settings, crawler) #这里就在调用父类的__init__方法
+
     #下面这个就不是类方法了，一个@classmethod只对下面的一个方法生效
     def process_request(self, request, spider):
         redisKeys = self.rconn.keys()
         while len(redisKeys) > 0:
-            elem = random.choice(redisKeys)
+            elem = random.choice(redisKeys)#返回随机项
             if spider.name + ':Cookies' in elem:
                 cookie = json.loads(self.rconn.get(elem))
                 request.cookies = cookie
