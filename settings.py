@@ -69,9 +69,10 @@ DOWNLOADER_MIDDLEWARES = {
 
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
-ITEM_PIPELINES = {
-   'scrapy_redis.pipelines.RedisPipeline': 300,
-}
+# ITEM_PIPELINES = {
+#    'scrapy_redis.pipelines.RedisPipeline': 300,#如果爬取结果也要放入redis的话可以开这个
+#    'test1.pipelines.test1Pipeline': 300,
+# }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html
