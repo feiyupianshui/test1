@@ -5,6 +5,7 @@ from scrapy.spider import CrawlSpider, Rule, Request
 from scrapy.linkextractors import LinkExtractor
 from scrapy import FormRequest
 from bs4 import BeautifulSoup
+from radiowave.items import RadiowaveItem
 
 account = 'Q8B1948D90565EAA8F705E7C91E4CAAE6'
 password = '^118667'
