@@ -10,9 +10,9 @@ import datatime
 class Test1Pipeline(object):
 
     def __init__(self):
-        Client = MongoClient("mongodb://haoduofuli:haoduofuli123@localhost:27017/haoduofuli")#这个字符串有问题，等我搞清楚了pymongo了再回来改
+        Client = MongoClient("mongodb://hmq:118667@localhost:27017/")
         db = Client['radiowave']
-        self.save = db['radiowave']
+        self.save = db['drama']
     def process_item(self, item, spider):
         if isinstance(item, RadiowaveItem):
             dramaid = item['dramaid']
@@ -20,14 +20,12 @@ class Test1Pipeline(object):
             category = item['category']
             imgurl = item['imgurl']
             dramaurl = item['dramaurl']
-            ip = item['ip']
             post = {
-                '下载链接': dramaurl,
-                '片名':dramaname,
-                '种类':category,
-                '海报':imgurl,
-                '编号':dramaid,
-                '执行任务的服务器':ip,
+                '_id': dramaid,
+                '剧名': dramaname,
+                '类型': category,
+                '海报链接': imgurl,
+                '百度云链接': dramaurl,
                 '储存时间': datetime.datetime.now()
             }
             self.save.insert_one(post)
