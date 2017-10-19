@@ -106,4 +106,4 @@ REDIRECT_ENABLED = False
 
 HTTPERROR_ALLOWED_CODES = [302, 301]
 
-DEPTH_LIMIT = 3 #爬全站确实深度限制很重要
+# DEPTH_LIMIT = 3 #爬全站确实深度限制很重要

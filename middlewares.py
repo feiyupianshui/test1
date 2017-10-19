@@ -9,7 +9,7 @@ from scrapy import signals
 import json
 import redis
 import random
-from .useragent import agents
+from .userAgent import agents
 from .cookies import init_cookie#, remove_cookie, upadate_cookie这两个还没有定义
 from scrapy.downloadermiddlewares.useragent import UserAgentMiddleware
 from scrapy.downloadermiddlewares.retry import RetryMiddleware

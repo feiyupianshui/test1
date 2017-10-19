@@ -8,7 +8,7 @@ from .settings import REDIS_URL
 
 logger = logging.getLogger(__name__)
 reds = redis.Redis.from_url(REDIS_URL, db=2, decode_responses=True)#把账密放到了db2，最后一个参数必须有，不然数据会变成byte形式，那就完全毁了。
-login_url = 'http://dbfansub.com/'
+login_url = 'http://dbfansub.com/user/login/?redirect_to=http%3A%2F%2Fdbfansub.com%2Ftvshow%2F8902.html'
 
 def get_cookie(account, password):#这对参数在下面init_cookie()中对应着user:password这对键值
     s = requests.Session()
@@ -26,7 +26,7 @@ def get_cookie(account, password):#这对参数在下面init_cookie()中对应�
 
 def init_cookie(red, spidername):#spidername在中间件中是用crawler.spider.name传入的
     redkeys = reds.keys()#登录帐号
-    for user in reskeys:
+    for user in redkeys:
         password = reds.get(user)#登录密码
         if red.get("%s:Cookies:%s--%s" % (spidername, user, password)) is None:
             cookie = get_cookie(user, password)#调用了上面的获取cookies函数
