@@ -13,19 +13,20 @@ class Test1Pipeline(object):
         Client = MongoClient("mongodb://hmq:118667@localhost:27017/")
         db = Client['radiowave']
         self.save = db['drama']
+
     def process_item(self, item, spider):
         if isinstance(item, RadiowaveItem):
-            dramaid = item['dramaid']
+            dramaid = int(item['dramaid'])
             dramaname = item['dramaname']
             category = item['category']
             imgurl = item['imgurl']
-            dramaurl = item['dramaurl']
+            dramapage = item['dramapage']
             post = {
                 '_id': dramaid,
                 '剧名': dramaname,
                 '类型': category,
                 '海报链接': imgurl,
-                '百度云链接': dramaurl,
+                '详情页面': dramapage,
                 '储存时间': datetime.datetime.now()
             }
             self.save.insert_one(post)

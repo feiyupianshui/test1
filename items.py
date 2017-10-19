@@ -11,8 +11,8 @@ import scrapy
 class DingdianItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
-    # 下载链接
-    dramaurl = scrapy.Field()
+    # 详情页面
+    dramapage = scrapy.Field()
     # 片名
     dramaname = scrapy.Field()
     # 种类
@@ -21,5 +21,4 @@ class DingdianItem(scrapy.Item):
     imgurl = scrapy.Field()
     # 编号
     dramaid = scrapy.Field()
-    #执行任务的服务器
-    ip = scrapy.Field()
+

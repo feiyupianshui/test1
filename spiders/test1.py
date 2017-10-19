@@ -7,8 +7,6 @@ from scrapy import FormRequest
 from bs4 import BeautifulSoup
 from radiowave.items import RadiowaveItem
 
-account = 'Q8B1948D90565EAA8F705E7C91E4CAAE6'
-password = '^118667'
 
 class myspider(CrawlSpider):
     name = 'test1'
@@ -34,23 +32,22 @@ class myspider(CrawlSpider):
     )
 
     def parse_item(self,response):
-        # print(response.url)
         item = RadiowaveItem()
         soup = BeautifulSoup(response.text, 'html.parser')
         name = soup.find('h1', class_="entry-title h3").get_text()
-        category1 = name[:4]
-        category2 = category1.split('【')[1]
-        category3 = category2.split('】')[0]
-        str = '【' + category3 + '】'
-        dramaname = name.split('电波字幕组')[0].split(str)[1]
+        category = response.url.split('/')[-2]
+        dramaname = name.split('电波字幕组')[0]
         dramaid = response.url.split('.html')[0].split('/')[-1]
-        item['dramaname'] = name.split('电波字幕组')[0].split(str)[1]
-        item['category'] = category3
+        item['dramaname'] = dramaname
+        item['category'] = category
+        item['dramapage'] = response.url
         item['dramaid'] = response.url.split('.html')[0].split('/')[-1]
-        item['imgurl'] = soup.find('div', class_="article_index").next_sibling.li.a['href']
 
-        pans = soup.find_all('a', href=re.compile("baidu"))
-        for a in pans:
-            item['dramaurl'] = a['href']
+        imgurltag = soup.find('img', class_="alignnone")
+        if imgurltag is None:
+            print('图片不存在')
+            item['imgurl'] = '图片不存在'
+        else:
+            item['imgurl'] = imgurltag['src']
 
         return item
